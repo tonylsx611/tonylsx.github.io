@@ -1,0 +1,117 @@
+notice:					     #公告
+  enable: true
+  content: Welcome to my brand new blog!
+
+mode: time    #UI 07:00-19:00
+
+avatar:					     #头像
+  url: /image/avatar.jpg 
+  rounded: true
+  opacity: 1
+  status:
+    enable: true
+    # emoji: 😭
+    message: 不忘初心
+
+favicon: /image/seedling-line.svg			#网站图标
+
+social:
+  - name: E-Mail
+    link: mailto:tonylsx611@gmail.com
+    icon: icon-mail-line
+    color: "#8E71C1"
+  - name: QQ
+    link: /image/qq.jpg
+    icon: icon-qq-line
+    color: "#12B7F5"
+  - name: Wechat
+    link: /image/wechat.jpg
+    icon: icon-wechat-2-line
+    color: "#1AAD19"
+
+banner:
+  enable: true
+  title: 忆潇湘的小站
+
+
+wordcloud:
+  enable: true
+
+
+menu:
+  home:
+    path: /
+    icon: icon-home-4-line
+  list:
+    - type: archives
+      path: /archives/
+      icon: icon-archive-line
+    - type: categories         #still constructing...
+      path: /categories/
+      icon: icon-folder-2-line
+    - type: tags                  #still constructing...
+      path: /tags/
+      icon: icon-price-tag-3-line
+  custom:
+    title: 阿里云盘
+    path: https://www.aliyundrive.com/drive
+    icon: icon-cloud-line
+
+
+pages:
+  - name: 我的小伙伴们
+    url: https://www.must.icu
+    icon: icon-genderless-line
+    color: dodgerblue
+  - name: Moodle
+    url: https://moodle.must.edu.mo
+    icon: icon-women-line
+    color: hotpink
+
+
+reward: 						#打赏
+  enable: true
+  icon: icon-hand-coin-line
+  comment: I'm so cute. Please give me money.
+  methods:
+    - name: 支付宝
+      path: /image/alipay.png
+      color: "#00A3EE"
+      icon: icon-alipay-line
+
+    - name: 微信支付
+      path: /image/wechat.png
+      color: "#2DC100"
+      icon: icon-wechat-pay-line
+
+footer:
+  since: 2022
+  powered:
+    enable: false
+  live_time:
+    enable: true
+    prefix: 本博客已萌萌哒地运行
+    suffix: (●'◡'●)
+    start_time: "2022-02-20T00:00:00"
+
+wordcount:
+  enable: true
+  count: true
+  time: true
+
+local_search:
+  enable: true
+
+comment:
+  enable: true
+
+mourn:   #默哀日
+  enable: true
+  days:
+    - "4-4"     #抗击新冠肺炎
+    - "9-18"   #勿忘国耻
+    - "12-13" #南京大屠杀
+
+katex:
+  copy_tex: true
+  global: false
