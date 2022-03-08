@@ -1,7 +1,7 @@
 ---
 title: Hexo 网站搭建指南
 date: 2022-02-24 03:14:29
-author: Hexo offical
+author: Tony
 tags: 
 	- Hexo
 categories:
@@ -89,6 +89,8 @@ sudo npm install
 
 ​		Now you can see some files inside the folder, but only three folders you need to concerntrated.
 
+![image-20220308165404552](Hexo_creation/image-20220308165404552.png)
+
 - node_modules: 依赖包
 - public：存放生成的页面
 - scaffolds：生成文章的一些模板
@@ -102,7 +104,9 @@ sudo npm install
 
 ​		Firstly, you need to have a GitHub account…
 
-​		Then, create a **new repository** on GitHub and named `yourusername.github.io`, note that you **must** named like this (`yourusername` is your user name), otherwise the deployment cannot be recognized. 
+​		Then, create a **new repository** on GitHub and named `yourusername.github.io`, note that you **must** named like this (`yourusername` is your user name), otherwise the deployment cannot be recognized.
+
+![image-20220308165502809](Hexo_creation/image-20220308165502809.png) 
 
 ### Add SSH key to GitHub
 

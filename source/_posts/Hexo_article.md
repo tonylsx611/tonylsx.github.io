@@ -8,7 +8,6 @@ categories:
 tags: 
 	- Hexo
 katex: true
-icon: icon-women-line
 ---
 
 ## Upload your first article
@@ -47,40 +46,24 @@ More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
 
 ### Advanced Settings
 
-Create a bat format file (e.g. `start.bat`) in the root folder of your blog.
+​		Create a bat format file (e.g. `start.bat`) in the root folder of your blog.
 
 ```bash
 hexo clean & hexo d & hexo g & hexo s
 pause
 ```
 
-Then every time you uploaded a file or change any settings, you can just double click the .bat file to update your blog, which is very convenience.
+​		Then every time you uploaded a file or change any settings, you can just double click the .bat file to update your blog, which is very convenience.
 
+## Hexo发布类型样例
 
-
-
-
-
-
-# 文章标题H1
-
-
+### Title
 
 在md下直接使用 # 进行新建标题，左侧菜单栏会自动生成H1-H6的标题，very nice!
 
-- 标题样式：
+<img src="Hexo_article/image-20220308162506034.png" alt="image-20220308162506034" style="zoom:50%;" />
 
-## H2
-
-### H3
-
-#### H4 
-
-##### H5
-
-###### H6
-
-# 头部字段
+### 头部字段
 
 在文章的第一行使用三个`-`（就是分割线）来创建头部字段。
 
@@ -98,9 +81,13 @@ tags:
 katex: true
 ```
 
-# 数学公式
+其中，`categories`在一篇文章中建议只设置一个，而`tags`可以设置很多个。这样可以防止文章分类混乱，在左侧菜单栏中可以很方便的访问。
 
-行内公式使用\$将数学公式括起来就好，行间公式使用两个\$\$，这跟md的格式是一样的。
+![image-20220308162715529](Hexo_article/image-20220308162715529.png)
+
+### 数学公式
+
+行内公式使用 $\$$ 将数学公式括起来就好，行间公式使用两个$\$\$$，这跟md的格式是一样的。
 
 需要注意的是，如果文章中需要使用数学公式，最好在头部字段前添加`katex: true`的字样。
 
@@ -119,7 +106,7 @@ x_1=x_3+2\times x^6\\
 \right]
 $$
 
-# 图片
+### 图片
 
 只需要将图片拖入md文档中即可，md会自动创建一个与文件名相同的文件夹以储存所有的图片素材，并会自动将图片复制到该文件夹中，因此所有的图片只需要输入相对路径即可。
 
@@ -133,9 +120,9 @@ $$
 
 ![traffic-light](Hexo_article/traffic-light.gif)
 
-# 代码
+### 代码
 
-没啥可说的。。。
+主题中默认代码有些会很丑，建议修改`_config.yml`中的指令把代码前面的行号取消，这样或许会变得好看一些，个人建议仅供参考。
 
 ```c++
 #include<iostream>
@@ -150,14 +137,14 @@ int main()
 }
 ```
 
-# 文字
+### 文字
 
 - 高亮语法：==Highlight==ing （==）
 - 加粗：**Bold** （\*\*）
 - 斜体：*Wall*（\*）
 - 删除线：~~请给我打钱~~（~~）
 
-# 音频及视频
+### 音频及视频
 
 暂不支持。。。
 
