@@ -80,11 +80,51 @@ git push origin branch_name
 
 ### `git pull`文件冲突报错
 
-报错信息：`error: Your local changes to the following files would be overwritten by merge`
-
-报错原因：在同步的时候出现两个相同文件名内容不同的文件，导致冲突；这个电脑更新了
-
 ![Screenshot 2022-03-08 161552](Hexo-synchronization/Screenshot%202022-03-08%20161552.png)
+
+报错信息：
+
+`error: Your local changes to the following files would be overwritten by merge`
+
+报错原因：
+
+在同步的时候出现两个相同文件名内容不同的文件，导致冲突；比如笔记本修改了之前的某个文章，在台式机`pull` 的时候就会产生这样的错误。
+
+解决方法：
+
+```bash
+git stash # 备份工作区内容
+git pull origin branch_name # 下载分支内容
+git stash pop # 恢复工作区内容
+```
+
+### 本地未关联远程分支报错
+
+报错信息：
+
+```bash
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+git branch --set-upstream-to=origin/<branch> release
+```
+
+报错原因：
+
+在建立新的本地分支后，未与GitHub分支关联，通常出现在首次添加新的电脑时报错。
+
+解决方法：
+
+他不是说的明明白白的嘛，你就按照他的提示加一行代码，关联上就完了！这里的`remote_branch`就是GitHub上的远程分支，`your branch`就是你的本地分支。
+
+```bash
+git branch --set-upstream-to=origin/remote_branch your_branch
+```
 
 ---
 
