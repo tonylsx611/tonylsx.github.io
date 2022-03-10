@@ -39,7 +39,7 @@ git push origin branch_name # 本地文件上传到hexo分支
 *注意所有命令都要在Hexo项目的目录下执行，没有目录的话找个地方新建一个。
 
 ```bash
-git clone -b branch_name https://github.com/username/username
+git clone -b branch_name https://github.com/username/username.github.io
 # 克隆分支到本地的博客文件夹
 sudo npm install -g hexo-cli # install hexo
 sudo npm install # 安装依赖库
