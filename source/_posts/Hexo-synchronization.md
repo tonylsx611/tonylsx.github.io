@@ -78,7 +78,7 @@ git push origin branch_name
 
 ## 同步过程中遇到的问题
 
-### `git pull`文件冲突报错
+### git pull文件冲突报错
 
 ![Screenshot 2022-03-08 161552](Hexo-synchronization/Screenshot%202022-03-08%20161552.png)
 
@@ -97,6 +97,28 @@ git stash # 备份工作区内容
 git pull origin branch_name # 下载分支内容
 git stash pop # 恢复工作区内容
 ```
+
+### Clone后首次部署报错
+
+![image-20220310172557250](Hexo-synchronization/image-20220310172557250.png)
+
+报错信息：
+
+```bash
+fatal: in unpopulated submodule '.deploy.git'
+FATAL:{
+	error: Error: Spawn failed
+		...
+}
+```
+
+报错原因：
+
+克隆远程分支到本地电脑的时候，把`.deploy.git`也一并克隆了过来，这个文件夹是部署到master的临时缓存文件夹，是另一个电脑部署用的，因此会产生冲突。
+
+解决方法：
+
+删掉本地的`.deploy.git`文件夹，重新部署。如果还有问题，可能是你开了多个命令行，多个terminal会产生冲突，全部关掉，重开一个来部署。
 
 ### 本地未关联远程分支报错
 
@@ -125,6 +147,25 @@ git branch --set-upstream-to=origin/<branch> release
 ```bash
 git branch --set-upstream-to=origin/remote_branch your_branch
 ```
+
+### 变更远程分支名字导致的报错
+
+报错信息：
+
+```bash
+error: src refspec master does not match any.
+error: failed to push some refs to 'git@github.com:username/username.github.io'
+```
+
+报错原因：
+
+这个报错原因就很多了，可能是忘记在``git add .``后面加`commit`了，也可能是没有输入正确的分支名，也可能是别的。不过如果你玩了一定时间的hexo了，觉得刚开始设置的那个远程分支名太复杂了，然后手欠的改了名字，那么恭喜你，和我一样。
+
+解决方法：
+
+我尝试了网上各种的解决办法，由简入繁，你可以试着删掉`.git`文件夹（这是个隐藏的文件夹），然后重新上传到远程分支，看看可不可以解决问题，反正我是没解决掉。
+
+最后我觉得最简单也是最有效的方法是把整个blog的文件夹复制一份做备份，然后全部删掉，重新clone，解决了所有问题，也不算麻烦。
 
 ---
 
