@@ -1,5 +1,5 @@
 ---
-title: Backpack
+title: 背包问题
 date: 2022-03-10 21:35:50
 tags:
 	- algorithm
@@ -59,7 +59,6 @@ categories:
 请认真仔细的对照上面的数组，好好理解一下上面的表达式。那么我们得到的状态转移方程即为：$$
 dp[i][j]=max(dp[i-1][j],\ dp[i-1][j-w[i]] + v[i])
 $$
-
 ### 1.3 python代码
 
 ```python
