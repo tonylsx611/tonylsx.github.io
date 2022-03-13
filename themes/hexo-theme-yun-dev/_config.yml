@@ -623,10 +623,8 @@ comment:
   enable: true
   icon: icon-chat-3-line
   tips:
-    # - 要不要和我说些什么？
-  # candidates:
-  #   - valine
-  #   - utterances
+    - 要不要和我说些什么？
+  candidates: valine
 
 # GitHub Issues Link Button
 # https://help.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests
@@ -642,14 +640,16 @@ github_discussions:
   username: YunYouJun
   repository: yunyoujun.github.io
 
+
+# Valine Comments
 # Valine
 # You can get your appid and appkey from https://leancloud.cn
 # More info available at https://valine.js.org
 # extend: https://github.com/DesertsP/Valine-Admin
 valine:
-  enable: false
-  appId: # your leancloud application appid
-  appKey: # your leancloud application appkey
+  enable: true
+  appid: jELyhp7diaXRNCmSSpIjtfAv-MdYXbMMI
+  appkey: 15eeHJWoTHJlxt9I0LQKLHbD
   placeholder: Just go go # comment box placeholder
   avatar: # gravatar style
   # meta:
