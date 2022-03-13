@@ -1,6 +1,6 @@
 notice:					     #公告
   enable: true
-  content: Welcome to my brand new blog!
+  content: 需要一个贴贴......
 
 mode: time    #UI 07:00-19:00
 
@@ -37,31 +37,11 @@ banner:
 wordcloud:
   enable: true
 
-valine:
-  enable: false
-  appId: jELyhp7diaXRNCmSSpIjtfAv-MdYXbMMI# your leancloud application appid
-  appKey: 15eeHJWoTHJlxt9I0LQKLHbD# your leancloud application appkey
-  placeholder: Just go go # comment box placeholder
-  avatar: # gravatar style
-  meta:
-    - nick
-    - mail
-    - link
-  pageSize: 10 # pagination size
-  # lang: zh-CN
-  # visitor: false
-  # highlight: true
-  # recordIP: false
-  # serverURLs:
-  # Emoji See: https://valine.js.org/emoji.html
-  # emojiCDN: //i0.hdslb.com/bfs/emote/
-  # emojiMaps:
-  #   tv_doge: 6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png
-  #   more...
-  # enableQQ: false
-  # requiredFields:
-  #   - nick
-  #   - mail
+waline:							#评论系统
+  enable: true
+  serverURL: https://blog-comment-qz5qabna5-tonylsx611.vercel.app/
+  visitor: true
+  comment: true
 
 menu:
   home:
