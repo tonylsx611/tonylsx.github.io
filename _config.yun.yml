@@ -1,6 +1,10 @@
 notice:					     #公告
   enable: true
+<<<<<<< HEAD
   content: 需要一个贴贴......
+=======
+  content: 持续更新中......欢迎打赏
+>>>>>>> eeb81c3c1ef40b1fb5d9bc211a25fc3b883aff74
 
 mode: time    #UI 07:00-19:00
 

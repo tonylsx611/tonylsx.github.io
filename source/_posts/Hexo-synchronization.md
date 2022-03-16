@@ -163,6 +163,8 @@ error: failed to push some refs to 'git@github.com:username/username.github.io'
 
 解决方法：
 
+![image-20220315180411753](Hexo-synchronization/image-20220315180411753.png)
+
 我尝试了网上各种的解决办法，由简入繁，你可以试着删掉`.git`文件夹（这是个隐藏的文件夹），然后重新上传到远程分支，看看可不可以解决问题，反正我是没解决掉。
 
 最后我觉得最简单也是最有效的方法是把整个blog的文件夹复制一份做备份，然后全部删掉，重新clone，解决了所有问题，也不算麻烦。
