@@ -56,13 +56,64 @@ BM算法本质上只说明了两个规则：
 
 ### 建立坏字符的hash table
 
-（待补充）
+为了节省时间，我们将所有待匹配的字符都建立一个映射，这样在找到坏字符的时候就可以以$O(1)$的时间知道substr应该向右移动多少。其实就是用一个最简单的hash table来寻找$\lambda_2$的值。
+
+我们这里为了简单起见，只适配了256个ASCII字符，如果想加入中文，那么这个hash table将变得大一些。按照规则，如果substr没有出现的字符一律设置成$\lambda_2=-1$，因此我们将hash table初始化成$-1$。
+
+```c
+void generate_bad_char_table(string str)
+{
+    bad_char_table = new int [256];
+    for(int i=0;i<256;i++)
+        bad_char_table[i]=-1;
+    for(int i=0;i<str.length();i++)
+    {
+        int ASCII=str[i];
+        bad_char_table[ASCII]=i;
+    }
+}
+```
 
 ### 好后缀的预处理
 
-（待补充）
+根据好后缀规则，我们完全可以暴力求解$\lambda _3$和$\lambda _4$的值，但是这样的效率显然不是最佳的，如果substr的长度比较大，那么每次判断好后缀的右移长度将浪费很多不必要的时间。因此我们可以对substr的所有好后缀进行预处理。建立两个长度与substr相等的数组，分别为`suffix[]`和`prefix[]`**，前者记录了substr中与好后缀匹配的最后一个字串的位置**（即$\lambda _4$)**，后者记录了与好后缀匹配的前缀子串**（不过目前鄙人认为没啥用）。
 
-## 代码
+听起来很懵，看一个例子：
+
+<img src="BM-algorithm/image-20220328173308025.png" alt="image-20220328173308025" style="zoom:50%;" />
+
+这样我们就可以知道所有好后缀的$\lambda _4$的值，当我们找到str中的好后缀（也即$\lambda_3$），就可以用$O(1)$的时间知道向右移动的长度。
+
+```c
+void generate_suffix_prefix(string str)
+{
+    int len=str.length();
+    suffix= new int [len];
+    prefix = new bool [len];
+    for(int i=0;i<len;i++)
+    {
+        prefix[i]= false;
+        suffix[i]= -1;
+    }
+    for(int i=0;i<len-1;i++)
+    {
+        int j=i;
+        int k=0;
+        while(j>=0 && str[j]==str[len-1-k])//inverse search
+        {
+            j--;
+            k++;
+            suffix[k]=j+1;
+        }
+        if(j==-1)//如果找到了开头
+            prefix[k]=true;
+    }
+}
+```
+
+
+
+## 完整代码
 
 ```c
 #include <iostream>
