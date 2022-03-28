@@ -67,11 +67,11 @@ TreeNode* addtree(TreeNode* tree, int arr[], int i)//数组转链表
 
 因此，我们绝大多数情况下是不会将链表转化成数组的，因为在链表中操作数据是非常方便的（当然在数组中操作也不麻烦），我们做的最多的事情就是搜索和遍历二叉树，如果不是很理解前一句话，建议再次回顾一下上一篇文章：[链式二叉树简介](https://tonylsx611.github.io/2022/02/25/binary_tree_1/)
 
-## 例题
+## 例题98
+
+### 题目描述
 
 Leetcode链接: [98. 验证二叉搜索树 - 力扣（LeetCode） (leetcode-cn.com)](https://leetcode-cn.com/problems/validate-binary-search-tree/)
-
-**题目描述：**
 
 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
 
@@ -103,7 +103,7 @@ explanation: 根节点的值是 5 ，但是右子节点的值是 4 。
 - 树中节点数目范围在$[1, 10^4]$ 内
 - $-2^{31} \leq Node.val \leq 2^{31} - 1$
 
-## 例题分析
+### 例题分析
 
 我最初的思路是，只要保证**每一个节点大于左枝，小于右枝**即可。
 
@@ -182,6 +182,107 @@ public:
             if (btree[i] >= btree[i + 1])
                 return false;
         return true;
+    }
+};
+```
+
+## 例题103
+
+### 题目描述
+
+Leetcode链接: [103. 二叉树的锯齿形层序遍历 - 力扣（LeetCode） (leetcode-cn.com)](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/)
+
+给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
+
+**输入输出样例：**
+
+![img](binary_tree_2/tree1.jpg)
+
+```bash
+输入：root = [3,9,20,null,null,15,7]
+输出：[[3],[20,9],[15,7]]
+```
+
+
+
+```
+输入：root = [1]
+输出：[[1]]
+```
+
+
+
+```
+输入：root = []
+输出：[]
+```
+
+
+
+**提示：**
+
+- 树中节点数目在范围 $[0, 2000]$ 内
+- $-100 \leq Node.val \leq 100$
+
+### 题目分析
+
+官方的题解以及很多人都很喜欢使用deque(双端队列)来做，这种做法自然很好，但是我们明明用正常的队列就可以搞定的事，干嘛那么复杂呢？
+
+首先分析题目，既然要求一层层地遍历二叉树，那么自然而然就应该想到用BFS来遍历。然而正常的BFS是没办法分层的，就是说我们BFS仅仅是维护了一个栈，但实际上无法将层与层之间的节点分离开来。我们只需要稍作改动，在while循环中嵌套一个for循环即可实现。想一想为什么？
+
+回忆一下BFS的原理，每次进栈的节点深度都一样，每次出栈的节点深度也是一样的，利用这个原理，就可以将每一层的节点分开，输出到二维vector数组中。
+
+至于还要从右向左遍历，我们只需要构建一个reverse函数，将二维数组双数的行不变，单数的行取反reverse，就好啦。
+
+需要注意的是，我们应该了解如何使用vector创建二维数组，每次for循环都用resize创建一行vector数组。如果不熟悉的话建议百度一下。。。（比如说我就不太会）
+
+全部代码如下，建议去leetcode自行做一下，不要抄任何现成的代码，这样对能力提升没好处。
+
+```c
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) 
+    {
+        vector<vector<int>> ans;
+        queue<TreeNode*> Q;
+        if(root)
+            Q.push(root);
+        else
+            return ans;
+        int depth=0;
+        while(!Q.empty())
+        {
+            ans.resize(depth+1); 
+            int temp=Q.size();
+            for(int i=0;i<temp;i++)//循环每一层
+            {
+                TreeNode* node;
+                node=Q.front();
+                if(node->left != NULL)
+                    Q.push(node->left);
+                if(node->right != NULL)
+                    Q.push(node->right);
+                ans[depth].push_back(node->val);
+                Q.pop();
+            }
+            depth++;
+        }
+        for(int i=1;i<depth;i+=2)
+            reverse(ans[i]);
+        return ans;
+    }
+    vector<int> reverse(vector<int>& arr)
+    {
+        int len=arr.size();
+        if(len<=1)
+            return arr;
+        for(int i=0;i<len/2;i++)//reverse
+        {
+            int temp=arr[i];
+            arr[i]=arr[len-i-1];
+            arr[len-i-1]=temp;
+        }
+        return arr;
     }
 };
 ```
