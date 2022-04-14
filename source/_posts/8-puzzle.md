@@ -84,7 +84,7 @@ int main()
                 swap(node[position],node[position+1]);//交换回来
             }
 
-            if(position == 0,1,2,3,4,5)//down
+            if(position == 0,1,2,3,4,5)//数字0向下移动
             {
                 swap(node[position],node[position+3]);//与0交换位置
 				Q.push(node);
@@ -104,7 +104,7 @@ int main()
 
 ### 记忆化BFS搜索代码
 
-```c
+```cpp
 string disk[1000001];//记忆数组
 int main()
 {
@@ -155,7 +155,7 @@ int main()
             if(position>2)//数字0向上移动
             {
                 swap(node[position],node[position-3]);
-				//同上
+                //同上
                 swap(node[position],node[position-3]);
             }
 
@@ -170,7 +170,7 @@ int main()
             if(position<6)//数字0向下移动
             {
                 swap(node[position],node[position+3]);
-				//同上
+                //同上
                 swap(node[position],node[position+3]);
             }
             Q.pop();
@@ -194,7 +194,7 @@ int main()
 
 ### 双向BFS代码
 
-```c
+```cpp
 #include<iostream>
 #include<string>
 #include<queue>
@@ -279,6 +279,7 @@ void bfs(string begin, string end)
             swap(node.str[position], node.str[position - 1]);
             str_to_int = hash1(node.str);
 
+            //---------------------
             if (!visit[str_to_int])//没有访问过
             {
                 Q.push(node);
@@ -291,6 +292,8 @@ void bfs(string begin, string end)
                 cout << ans << endl;
                 return;
             }
+            //---------------------
+            
             swap(node.str[position], node.str[position - 1]);
         }
 
@@ -298,10 +301,7 @@ void bfs(string begin, string end)
         {
             swap(node.str[position], node.str[position - 3]);
             str_to_int = hash1(node.str);
-
-            if (!visit[str_to_int])//没有访问过
             {...}//同上
-            judge();//同上
             swap(node.str[position], node.str[position - 3]);
         }
 
@@ -309,10 +309,7 @@ void bfs(string begin, string end)
         {
             swap(node.str[position], node.str[position + 1]);
             str_to_int = hash1(node.str);
-
-            if (!visit[str_to_int])//没有访问过
             {...}//同上
-            judge();//同上
             swap(node.str[position], node.str[position + 1]);
         }
 
@@ -320,10 +317,7 @@ void bfs(string begin, string end)
         {
             swap(node.str[position], node.str[position + 3]);
             str_to_int = hash1(node.str);
-
-            if (!visit[str_to_int])//没有访问过
             {...}//同上
-            judge();//同上
             swap(node.str[position], node.str[position + 3]);
         }
         Q.pop();
@@ -331,12 +325,127 @@ void bfs(string begin, string end)
 }
 ```
 
-### A*算法
+### A*算法（DFS）
 
+所谓$A*$算法，也称之为记忆化搜索，他会朝着更接近答案的方向去查找，而不是盲目的遍历所有的节点。对于八数码问题来说，该算法会比较每一个层的节点，寻找与答案**相似度最高的节点进行扩展**，而其余的节点将会稍后扩展或者直接剪掉。举例来说，`string final = "123804765";`，如果`string state = "123804756"`，那么差距`diff`就是$2$，$A*$算法会寻找`diff`最少的节点进行扩展。
 
+本题的解法严格意义上说并不是真正的$A*$算法，只能称之为使用$A*$算法的思路进行剪枝的方法，因为这种剪枝的效率极高，因此特拿出来单独说一说。（真正的$A*$算法是简历一个open和close表的那种，如果感兴趣可以google一哈）
+
+本方法有两个剪枝的点，第一点是去掉当前状态以前出现过的状态；我们并没有使用超大数组进行储存所有以前出现过的状态，因为那样费时费力；我们只针对最经常出现的状态进行剪枝，即第一次向左移动，第二次向右移动的状态和第一次向上移动，第二次向下移动的状态，这两种状态都会回到原本的情形，因此我们在`a_star()`函数中使用了`pre`变量来储存上一次的情况。
+
+第二个剪枝点就是$A*$算法的核心，即我们可以通过`diff+step>depth`来判断该分支一定不是最优解。其中`diff`是当前状态与目标状态的不同点，`step`是已经走的步数，`depth`是枚举的深度。想一想为什么？
+
+经过以上剪枝优化，我们可以极大的节省不必要的搜索，一秒钟的搜索深度可以达到$27$层，效率比双向BFS要更快些。
 
 ### A*算法代码
 
-```
+```cpp
+#include<iostream>
+#include<string>
+#include<queue>
+using namespace std;
+bool judge;
+int depth;
+string final = "123804765";
+string start = "603712458";
+
+bool check();
+bool test(int step);
+void A_star(int step,int posi,int pre);
+
+int main()
+{
+    int position;
+    for (int i = 0; i < 9; i++)
+        if (start[i] == '0')
+        {
+            position = i;
+            break;
+        }
+
+    while(1)
+    {
+        depth++;
+        A_star(0,position,-1);
+        if(judge)
+        {
+            printf("%d",depth);
+            break;
+        }
+    }
+    return 0;
+}
+
+bool check()
+{
+    for(int i=0;i<9;i++)
+        if(final[i]!=start[i])
+            return 0;
+    return 1;
+}
+
+bool test(int step)
+{
+    int diff=0;
+    for(int i=0;i<9;i++)
+        if(final[i]!=start[i])
+        {
+            diff++;
+            if(diff+step>depth)//不用走下去了
+                return 0; 
+        }
+    return 1;
+}
+
+void A_star(int step,int posi,int pre)
+{
+    if(step==depth)
+    {
+        if(check())
+            judge=true;
+        return;
+    }
+
+    if(posi==1 || posi==2 || posi==4 || posi==5 || posi==7 || posi==8)//数字0向左移动
+    {
+        if(pre!=3)//优化状态
+        {
+            swap(start[posi],start[posi-1]);
+            if(test(step))
+                A_star(step+1,posi-1,1);
+            swap(start[posi],start[posi-1]);
+        }
+    }
+    if(posi==3 || posi==4 || posi==5 || posi==6 || posi==7 || posi==8)//数字0向上移动
+    {
+        if(pre!=4)//优化状态
+        {
+            swap(start[posi],start[posi-3]);
+            if(test(step))
+                A_star(step+1,posi-3,2);
+            swap(start[posi],start[posi-3]);
+        }
+    }
+    if(posi==0 || posi==1 || posi==3 || posi==4 || posi==6 || posi==7)//数字0向右移动
+    {
+        if(pre!=1)//优化状态
+        {
+            swap(start[posi],start[posi+1]);
+            if(test(step))
+                A_star(step+1,posi+1,3);
+            swap(start[posi],start[posi+1]);
+        }
+    }
+    if(posi==0 || posi==1 || posi==2 || posi==3 || posi==4 || posi==5)//数字0向下移动
+    {
+        if(pre!=2)//优化状态
+        {
+            swap(start[posi],start[posi+3]);
+            if(test(step))
+                A_star(step+1,posi+3,4);
+            swap(start[posi],start[posi+3]);
+        }
+    }
+}
 ```
 

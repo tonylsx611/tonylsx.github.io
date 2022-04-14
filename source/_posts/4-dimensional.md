@@ -3,7 +3,7 @@ title: 浅谈四维空间
 date: 2022-04-09 16:18:48
 author: Tony
 tags:
-	- 思维空间
+	- 四维空间
 categories:
 	- 神学
 katex: true
