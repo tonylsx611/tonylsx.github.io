@@ -20,11 +20,67 @@ KMP 算法（Knuth-Morris-Pratt 算法）是一个著名的字符串匹配算法
 
 ## KMP算法原理
 
-
+从起始位置不回溯地匹配字符串，当出现失配情况时，利用已经得到的部分结果，尽可能地向右移动更远的位置。具体通过一个`next[]`数组确定移动多远的距离。
 
 ## KMP的实现
 
+最核心的问题便是如何求解`next[]`数组。而`next[]`数组的值即为公共前缀后缀长度向右移动一位的结果，特别的`next[0]=-1`。
 
+如下面这个例子：`string substr="abaabca"`，他的公共前缀后缀长度为`string public="0011201"`，那么next数组为`{-1,0,0,1,1,2,0}`.
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190423221541855.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3l5enNpcg==,size_16,color_FFFFFF,t_70)
+
+## 完整代码
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+int KMP(string str, string substr);
+int main()
+{
+    string str="abcdfffaerssssse";
+    string substr="aers";
+    cout << KMP(str, substr) << endl;
+    return 0;
+}
+
+int KMP(string str, string substr)
+{
+    int n = str.size();
+    int m = substr.size();
+
+    vector<int> next(m);
+    for (int i = 1, j = 0; i < m; i++)//预处理
+    {
+        while (j > 0 && substr[i] != substr[j])
+            j = next[j - 1];
+        if (substr[i] == substr[j])
+            j++;
+        next[i] = j;
+    }
+    for (int i = 0, j = 0; i < n; i++)
+    {
+        while (j > 0 && str[i] != substr[j])
+            j = next[j - 1];
+        if (str[i] == substr[j])
+            j++;
+        if (j == m)
+            return i - m + 1;
+    }
+}
+```
+
+## KMP与有限状态自动机
+
+`next[]`数组可以以有限状态自动机的方式来理解，状态转移图便是`next[]`数组所储存的信息，一个是当前匹配的状态，另一个是遇到的字符。
+
+如`string substr="ABABC"`，那么他的状态转移图如下所示：
+
+![image-20220415153721845](C:\Users\28580\Documents\Hexo Blog\source\_posts\image-20220415153721845-1650008256659.png)
+
+而`next[]={-1,0,0,1,1}`，不知是否看出某些规律呢?
 
 ## 完整代码
 
@@ -77,3 +133,7 @@ int main()
 
 ```
 
+## 参考文章
+
+1. [KMP 算法详解 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/83334559)
+2. [KMP算法详解_yyzsir的博客-CSDN博客_kmp算法详解](https://blog.csdn.net/yyzsir/article/details/89462339)
