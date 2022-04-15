@@ -78,7 +78,7 @@ int KMP(string str, string substr)
 
 如`string substr="ABABC"`，那么他的状态转移图如下所示：
 
-![image-20220415153721845](C:\Users\28580\Documents\Hexo Blog\source\_posts\image-20220415153721845-1650008256659.png)
+![image-20220415153721845](KPM-algorithm\image-20220415153721845.png)
 
 而`next[]={-1,0,0,1,1}`，不知是否看出某些规律呢?
 
