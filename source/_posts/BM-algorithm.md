@@ -220,3 +220,62 @@ int BM(string str, string substr)
 
 ```
 
+## Sunday算法——BM优化版
+
+Sunday算法由Daniel M.Sunday在1990年提出，它的思想跟BM算法很相似，只不过BM算法是从后向前匹配，而Sunday算法是从前向后匹配，并在匹配失败时关注与substr末尾字符的下一个字符对应的str字符，我们暂且称之为字符$k$。
+
+Sunday算法的原理如下：
+
+1. 如果$k$没有在substr中出现过，则移动的位数$len=strlen(substr)+1$
+2. 如果$k$在substr中出现过，则对齐这两个字符，即移动的位数$len=strlen(substr)-position(k)+1$
+
+## 完整代码
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+int Sunday(string str,string substr);
+int main()
+{
+    string str="hanker and chief";
+    string substr="and";
+    cout<<Sunday(str,substr)<<endl;
+    return 0;
+}
+int Sunday(string str,string substr)
+{
+    int m=str.length();
+    int n=substr.length();
+
+    int hash[256]={0};
+    for(int i=0;i<n;i++)
+        hash[substr[i]]=i+1;
+
+    int temp=0;//position of substr
+    int sub_start_position=0;//position of the start point of substr
+    for(int i=0;i<=m;i++)
+    {
+        if(temp==n)
+            return i-n;
+        if(str[i]==substr[temp])//匹配
+            temp++;
+        else//失配
+        {
+            if(hash[str[sub_start_position+n]])//存在k
+            {
+                i=i+n-hash[str[sub_start_position+n]];
+                sub_start_position=i+1;
+            }
+            else//不存在k
+            {
+                i+=n;
+                sub_start_position=i+1;
+            }
+            temp=0;
+        }
+    }
+    return -1;
+}
+```
+
