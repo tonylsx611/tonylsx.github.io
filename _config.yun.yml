@@ -1,6 +1,6 @@
 notice:					     #公告
   enable: true
-  content: 悼念MU5735航班遇难同胞，愿逝者安息，生者坚强。
+  content: Happy Mother's Day
 
 mode: time    #UI 07:00-19:00
 
@@ -110,7 +110,7 @@ local_search:
 mourn:   #默哀日
   enable: true
   days:
-    - "3-27"   #MU5735航班
+    - "3-27"   #MU5735航班头七
     - "4-4"     #抗击新冠肺炎
     - "9-18"   #勿忘国耻
     - "12-13" #南京大屠杀
