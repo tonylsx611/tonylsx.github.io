@@ -148,26 +148,42 @@ git branch --set-upstream-to=origin/<branch> release
 git branch --set-upstream-to=origin/remote_branch your_branch
 ```
 
-### 变更远程分支名字导致的报错
-
-报错信息：
-
-```bash
-error: src refspec master does not match any.
-error: failed to push some refs to 'git@github.com:username/username.github.io'
-```
-
-报错原因：
-
-这个报错原因就很多了，可能是忘记在``git add .``后面加`commit`了，也可能是没有输入正确的分支名，也可能是别的。不过如果你玩了一定时间的hexo了，觉得刚开始设置的那个远程分支名太复杂了，然后手欠的改了名字，那么恭喜你，和我一样。
-
-解决方法：
+### fetch first 报错
 
 ![image-20220315180411753](Hexo-synchronization/image-20220315180411753.png)
 
-我尝试了网上各种的解决办法，由简入繁，你可以试着删掉`.git`文件夹（这是个隐藏的文件夹），然后重新上传到远程分支，看看可不可以解决问题，反正我是没解决掉。
+报错原因：
 
-最后我觉得最简单也是最有效的方法是把整个blog的文件夹复制一份做备份，然后全部删掉，重新clone，解决了所有问题，也不算麻烦。
+远程库版本与本地版本不一致导致的报错。
+
+解决方法：
+
+```bash
+git pull --rebase origin your_branch
+```
+
+### Non-fast-forward 报错
+
+![image-20220516171510709](Hexo-synchronization/image-20220516171510709.png)
+
+报错原因：
+
+别人上传到远程仓库后，你没有及时的同步或拉取到本地，但是你同时又添加了一些内容。当你在提交时，它会检测到你之前从远程仓库拉取的时候的仓库状态和现在的不一样。于是，它为了安全起见拒绝了你的提交。
+
+解决方法（推荐）：先合并之前的历史，再进行提交
+
+```bash
+git fetch origin your_branch # 先抓取远程仓库的更新到本地
+git merge origin your_branch # 然后与你的本地仓库合并
+git pull --rebase origin your_branch # 然后就可以提交修改了
+
+```
+
+解决方法（不推荐）：丢弃之前的历史，强行提交
+
+```bash
+git push --force # 这种方法很不安全
+```
 
 ---
 

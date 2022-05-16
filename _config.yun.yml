@@ -1,6 +1,6 @@
 notice:					     #公告
   enable: true
-  content: Happy Mother's Day
+  content: Happy Birthday 520
 
 mode: time    #UI 07:00-19:00
 
@@ -31,7 +31,11 @@ social:
 
 banner:
   enable: true
-  title: 忆潇湘的小站
+  title: 
+	- E
+	- T
+	- G
+	- K
 
 
 wordcloud:
@@ -64,8 +68,8 @@ menu:
 
 
 pages:
-  - name: 我的小伙伴们
-    url: https://www.must.icu
+  - name: MUST
+    url: https://www.must.edu.mo
     icon: icon-genderless-line
     color: dodgerblue
   - name: Moodle
@@ -95,7 +99,7 @@ footer:
     enable: false
   live_time:
     enable: true
-    prefix: 本博客已萌萌哒地运行
+    prefix: 本博客已咯咯哒地运行
     suffix: (●'◡'●)
     start_time: "2022-02-20T00:00:00"
 
