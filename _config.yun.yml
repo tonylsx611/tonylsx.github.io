@@ -2,7 +2,7 @@ notice:					     #公告
   enable: true
   content: Happy Birthday 520
 
-mode: time    #UI 07:00-19:00
+mode: auto    #UI 07:00-19:00
 
 avatar:					     #头像
   url: /image/avatar.jpg 
@@ -10,10 +10,17 @@ avatar:					     #头像
   opacity: 1
   status:
     enable: true
-    # emoji: 😭
     message: 不忘初心
 
-favicon: /image/seedling-line.svg			#网站图标
+#网站图标
+favicon: /favicon/seedling-line.svg
+
+bg_image:
+  enable: true
+  url: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/stars-timing-0-blur-30px.jpg
+  # dark:
+  # blur: 30px # 设置背景模糊程度
+  opacity: 0.8
 
 social:
   - name: E-Mail
@@ -29,13 +36,19 @@ social:
     icon: icon-wechat-2-line
     color: "#1AAD19"
 
+# 标语动画
 banner:
   enable: true
   title: 
-	- E
-	- T
-	- G
-	- K
+	- Easy
+	- To
+	- Get
+	- Knowledge
+  cloud:
+    enable: true
+    color: white
+  go_down:
+    enable: true
 
 
 wordcloud:
@@ -121,4 +134,4 @@ mourn:   #默哀日
 
 katex:
   copy_tex: true
-  global: false
+  global: true
