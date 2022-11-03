@@ -190,9 +190,7 @@ for i in range(0, n):
 - 不把物品$i$装入背包：`dp[i][j]=dp[i-1][j]`
 - 把物品$i$装入背包：因为每种物品有数量限制，因此我们需要在限制数量中找到最大的价值，此时`dp[i][j]=dp[i-1][j-k*w[i]] + k*v[i-1]`
 
-因此，状态转移方程为：$$
-dp[i][j]=max(dp[i-1][j],\ dp[i][j-k*w[i]] + k*v[i])
-$$
+因此，状态转移方程为：$$dp[i][j]=max(dp[i-1][j],\ dp[i][j-k*w[i]] + k*v[i])$$
 
 ### 3.3 python代码
 
@@ -213,6 +211,8 @@ for i in range(0, n):
 print(dp)
 print(dp[n - 1][w_max]) #42
 ```
+
+
 
 ### 3.4 算法优化
 

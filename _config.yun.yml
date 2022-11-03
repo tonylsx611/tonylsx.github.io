@@ -1,6 +1,6 @@
 notice:					     #公告
   enable: true
-  content: Happy Birthday 520
+  content: 出租广告位啦~
 
 mode: auto    #UI 07:00-19:00
 
@@ -39,11 +39,7 @@ social:
 # 标语动画
 banner:
   enable: true
-  title: 
-	- Easy
-	- To
-	- Get
-	- Knowledge
+  title: 忆潇湘的小站
   cloud:
     enable: true
     color: white
@@ -112,7 +108,7 @@ footer:
     enable: false
   live_time:
     enable: true
-    prefix: 本博客已咯咯哒地运行
+    prefix: 本博客已萌萌哒地运行
     suffix: (●'◡'●)
     start_time: "2022-02-20T00:00:00"
 
