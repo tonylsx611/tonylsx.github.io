@@ -1,5 +1,5 @@
 ---
-title: Android Studio开发 5
+title: Android Studio 开发 5
 date: 2022-11-09 14:54:30
 tags: 
   - Android Studio
@@ -15,7 +15,7 @@ author: Tony
 
 实现一个简单的饮品搜索应用，用户可以查看不同饮品的图片、名字和简介。
 
-![image-20221109150235360](Android-Studio-5/image-20221109150235360.png)
+![image-20221121161500306](Android-Studio-5/image-20221121161500306.png)
 
 ## 界面编辑
 
@@ -250,12 +250,105 @@ public class DrinkActivity extends AppCompatActivity {
 
 ## Kotlin逻辑编辑
 
+```kotlin
+//Drink.kt
 
+class Drink private constructor(val name: String, val description: String, val imageResourceID: Int) {
+
+    override fun toString(): String { return name }
+    @JvmName("GetDescription")
+    fun getDescription(): String? { return description }
+
+    @JvmName("GetName")
+    fun getName(): String? { return name }
+
+    @JvmName("GetImageResourceID")
+    fun getImageResourceID(): Int { return imageResourceID }
+
+    companion object {
+        val drinks = arrayOf(
+            Drink("Cappuccino", "Description of cappuccino", R.drawable.cappuccino),
+            Drink("Latte", "Description of latte", R.drawable.latte),
+            Drink("Filter", "Description of Filter", R.drawable.filter)
+        )
+    }
+}
+```
+
+```kotlin
+//MainActivity.kt
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val itemClickListener =
+            OnItemClickListener { parent, view, position, id ->
+                if (position == 0) {
+                    val intent = Intent(this@MainActivity, DrinkCategoryActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        val listView = findViewById<ListView>(R.id.list_options)
+        listView.onItemClickListener = itemClickListener
+    }
+}
+```
+
+```kotlin
+//DrinkCategoryActivity.kt
+
+class DrinkCategoryActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_drink_category)
+        val listAdapter: ArrayAdapter<Drink?> =
+            ArrayAdapter<Drink?>(this, android.R.layout.simple_list_item_1, Drink.drinks)
+        val listDrinks = findViewById<ListView>(R.id.list_drinks)
+        listDrinks.adapter = listAdapter
+
+        //Create the listener
+        val itemClickListener =
+            OnItemClickListener { parent, view, position, id ->
+                val intent = Intent(this@DrinkCategoryActivity, DrinkActivity::class.java)
+                intent.putExtra(DrinkActivity.EXTRA_DRINKID, id.toInt())// .toInt() is a must
+                startActivity(intent)
+            }
+        listDrinks.onItemClickListener = itemClickListener
+    }
+}
+```
+
+```kotlin
+//DrinkActivity.kt
+
+class DrinkActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_drink)
+        val drinkID = intent.extras!![EXTRA_DRINKID] as Int
+        val drink = Drink.drinks[drinkID]
+        val name = findViewById<TextView>(R.id.name)
+        name.setText(drink.getName())
+        val description = findViewById<TextView>(R.id.description)
+        description.setText(drink.getDescription())
+        val photo = findViewById<ImageView>(R.id.photo)
+        photo.setImageResource(drink.getImageResourceID())
+        photo.contentDescription = drink.getName()
+    }
+
+    companion object {
+        const val EXTRA_DRINKID = ""
+    }
+}
+```
+
+还是Kotlin简洁啊!
 
 
 
 ---
 
-上一篇：
+上一篇：[Android Studio开发 4 | Tony ](http://tonylsx.top/2022/10/11/Android-Studio-4/)
 
-下一篇：
+下一篇：马上就好了...
