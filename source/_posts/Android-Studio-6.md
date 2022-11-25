@@ -270,4 +270,4 @@ class OrderActivity : AppCompatActivity() {
 
 上一篇：[Android Studio开发 5 | Tony ](http://tonylsx.top/2022/10/11/Android-Studio-4/)
 
-下一篇：马上就好了...
+下一篇：[Android Studio开发 7 | Tony](http://tonylsx.top/2022/11/25/Android-Studio-7/)
