@@ -126,3 +126,72 @@ int main()
 
 ```
 
+## Python Server
+
+```python
+import socket
+import threading
+import time
+
+clients = []
+
+
+def new_thread(sock, addr, q):
+    msg = "Hello, " + str(addr[1]) + "! You've joined the group."
+    sock.send(msg.encode())
+    temp_msg = "Client " + str(addr) + " join the group"
+    print(temp_msg)
+    print("Now there are ", threading.active_count() - 1, " people in the group!")
+
+    while 2 == 2:
+        msg = sock.recv(256).decode('utf-8')
+        if msg == "quit":
+            temp_msg = "Bye-bye" + str(addr) + "!"
+            print(temp_msg)  # (Id, port)
+            print("Now there are ", threading.active_count() - 2, " people in the group!")
+            break
+        elif msg == "":
+            temp_msg = addr + "has quit the group accidentally..."
+            print(temp_msg)
+            print("Now there are ", threading.active_count() - 2, " people in the group!")
+            break
+        else:
+            temp_msg = "    " + str(addr[1]) + ": " + msg
+            print(temp_msg)
+    clients.remove(sock)
+    sock.close()
+
+
+if __name__ == '__main__':
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    except Exception:
+        print("Socket Error!")
+
+    try:
+        s.bind(('127.0.0.1', 7777))
+    except Exception:
+        print("Bind Error!")
+
+    try:
+        s.listen(5)
+    except Exception:
+        print("Listen Error!")
+
+    print('Server is running...')
+
+    while True:
+        try:
+            sock, addr = s.accept()
+        except Exception:
+            print("Accept Error!")
+
+        clients.append(sock)
+        t = threading.Thread(target=new_thread, args=(sock, addr, q, ))
+        t.start()
+
+```
+
+---
+
+上一篇：
