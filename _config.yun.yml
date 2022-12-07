@@ -1,6 +1,6 @@
 notice:					     #公告
   enable: true
-  content: 出租广告位啦~
+  content: 缅怀江泽民同志 1926~2022
 
 mode: auto    #UI 07:00-19:00
 
@@ -123,6 +123,7 @@ local_search:
 mourn:   #默哀日
   enable: true
   days:
+    - "12-1"   # 仅限2022 江泽民去世
     - "3-27"   #MU5735航班头七
     - "4-4"     #抗击新冠肺炎
     - "9-18"   #勿忘国耻
