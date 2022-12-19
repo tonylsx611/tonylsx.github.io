@@ -3,24 +3,6 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-<<<<<<< HEAD
-title: Hexo
-subtitle: ''
-description: ''
-keywords:
-author: John Doe
-language: en
-timezone: ''
-
-# URL
-## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
-permalink: :year/:month/:day/:title/
-permalink_defaults:
-pretty_urls:
-  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
-  trailing_html: true # Set to false to remove trailing '.html' from permalinks
-=======
 title: Tony
 subtitle: 一个社恐的三好学生
 description: 完美主义者
@@ -37,7 +19,6 @@ permalink_defaults:
 pretty_urls:
    trailing_index: false # Set to false to remove trailing 'index.html' from permalinks
    trailing_html: false # Set to false to remove trailing '.html' from permalinks
->>>>>>> 8b18dcfe5aa6c1ed39032cf030bfa5d892ecd51b
 
 # Directory
 source_dir: source
@@ -59,23 +40,6 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-<<<<<<< HEAD
-post_asset_folder: false
-relative_link: false
-future: true
-highlight:
-  enable: true
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
-  wrap: true
-  hljs: false
-prismjs:
-  enable: false
-  preprocess: true
-  line_number: true
-  tab_replace: ''
-=======
 post_asset_folder: true
 marked:
   prependRoot: true
@@ -94,7 +58,6 @@ prismjs:
   preprocess: true
   line_number: false
   tab_replace: ""
->>>>>>> 8b18dcfe5aa6c1ed39032cf030bfa5d892ecd51b
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -103,11 +66,7 @@ prismjs:
 index_generator:
   path: ''
   per_page: 10
-<<<<<<< HEAD
-  order_by: -date
-=======
   order_by: -updated
->>>>>>> 8b18dcfe5aa6c1ed39032cf030bfa5d892ecd51b
 
 # Category & Tag
 default_category: uncategorized
@@ -141,19 +100,11 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-<<<<<<< HEAD
-theme: landscape
-=======
 theme: yun
->>>>>>> 8b18dcfe5aa6c1ed39032cf030bfa5d892ecd51b
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-<<<<<<< HEAD
-  type: ''
-=======
   type: git
   repo: https://github.com/tonylsx611/tonylsx611.github.io.git
   branch: master
->>>>>>> 8b18dcfe5aa6c1ed39032cf030bfa5d892ecd51b
