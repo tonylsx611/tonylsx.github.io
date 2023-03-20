@@ -6,5 +6,5 @@ echo.
 git commit -m "%date% updated"
 git push origin hexo
 echo.
-echo Push to Github Successfully!\n
+echo Push to Github Successfully!
 @pause
