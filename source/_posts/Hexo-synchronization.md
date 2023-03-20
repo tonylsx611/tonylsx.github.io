@@ -8,15 +8,22 @@ categories:
 	- Hexo搭建
 ---
 
-## 如何实现同步
+# 如何实现同步
 
 Hexo的同步本质上很简单，使用`git`命令push一下，然后在另一台电脑pull一下就OK。但是我在实际的同步过程中却遇到了各种的报错，这篇文章同样也记录一下我遇到的问题，也为了后期我再次换电脑，或者再次遇到奇奇怪怪的报错做参考。
 
-我现在在家里使用**台式电脑**，在外使用轻薄的商务本（以下简称**笔记本**），所以就以此为例，介绍如何实现两个设备间的同步问题。
+经过多次的试错后，总结了一些多电脑同步的固定方法，只需要严格按照下面的操作流程进行上载和更新文件，理论上就不会出现报错。如果出现了错误，可以参考下一章的常见报错处理。
 
-首先，我的本地blog储存在台式电脑上面，我们需要将这个blog上传到GitHub上，准确的说是你的GitHub的分支上。我们的目的就是在你的GitHub仓库建一个分支，然后把这个分支当作一个中介，存储我们的源文件，当在A电脑上修改过后直接上传（push）到分支上，然后在B电脑上下载（pull）该分支的所有文件，这样就实现了多设备同步。
+简单的来说，GitHub就相当于是一个云盘，可以存储整个网页的数据。当我们在不同电脑更新文章的时候，需要先遵循以下步骤：
 
-### 上传本地仓库到远程仓库
+- 从云端更新内容到本地(git pull)
+- 新建或修改文章
+- 部署文章/测试页面内容(hexo deploy)
+- 将更新后的文章同步到云端(git push)
+
+如果多个设备同时更新文章 就极有可能出现本地内容与云端内容不符的情况，于是就会出现各种莫名其妙的报错。大多数情况下的解决方案都是再次从云端拉取新的内容，然后融合云端和本地数据(git merge) ，最后将融合后的数据同步到云端。
+
+### 首次上传本地仓库到远程仓库
 
 *注意所有命令都要在Hexo项目的目录下执行。
 
@@ -32,7 +39,7 @@ git commit -m "This is the first time to syn!" # 提交备注
 git push origin branch_name # 本地文件上传到hexo分支
 ```
 
-### 首次从笔记本下载工程文件
+### 首次下载远程仓库到本地仓库
 
 *注意另一台电脑上要部署好所有的环境，如git，Nodejs，SSH等，详情参考：[Hexo 网站搭建指南](https://tonylsx611.github.io/2022/02/24/Hexo_creation/)
 
@@ -46,37 +53,40 @@ sudo npm install # 安装依赖库
 sudo npm install hexo-deployer-git # git部署相关配置
 ```
 
-### 首次用笔记本更新文件
+# 同步编辑流程
+
+### 从云端更新内容到本地
 
 ```bash
-hexo clean && hexo d && hexo g && hexo s #更新Github中的master文件
-# 如果上面这部成功部署，就可以更新分支文件了
+git pull origin branch_name   # 从Github同步数据到台式电脑
+```
+
+### 新建或修改文章
+
+```bash
+hexo new article_name  # 创建新的文章 
+```
+
+### 部署文章/测试页面内容
+
+```bash
+hexo clean
+hexo deploy
+hexo generate
+hexo server
+```
+
+### 将更新后的文章同步到云端
+
+```bash
 git add .
-git commit -m "..."
+git commit -m "your comments"
 git push origin branch_name
 ```
 
-### 返回台式电脑进行编辑
+只要严格按照以下流程操作，基本无忧。**一定要记得在测试页面之后及时更新文章到云端！！！**
 
-```bash
-git pull origin branch_name # 从Github同步数据到台式电脑
-# 或者直接git pull也可以
-
-
-# 修改或者更新文章。。。
-
-
-hexo clean && hexo d && hexo g && hexo s #更新Github中的master文件
-# 如果上面这部成功部署，就可以更新分支文件了
-git add .
-git commit -m "..."
-git push origin branch_name
-#有没有发现，跟上面的代码一样了，没错，这样就形成了循环！
-```
-
-完成首次同步之后的任何设备都可以使用上面的代码进行同步和更新。
-
-## 同步过程中遇到的问题
+# 同步过程中遇到的问题
 
 ### git pull文件冲突报错
 
