@@ -75,7 +75,10 @@ https://m.weibo.cn/api/container/getIndex?uid=2022252207&luicode=10000011&lfid=1
 
 # 全部代码
 
-## 通过关键词获取
+代码涵盖了：
+
+- 爬取关键词下的热门微博
+- 爬取用户发布的所有微博
 
 ```python
 import os.path
@@ -91,7 +94,6 @@ headers = {
     'accept': 'application/json, text/plain, */*',
     'accept-language': 'zh-CN,zh;q=0.9,en-CN;q=0.8,en;q=0.7,es-MX;q=0.6,es;q=0.5',
     'client-version': 'v2.38.9',
-    cookie = '这里需要自己获取哈'
     'referer': 'https://m.weibo.cn/detail/4877693583361088',
     'sec-ch-ua': '"Chromium";v="110", "Not A(Brand";v="24", "Microsoft Edge";v="110"',
     'sec-ch-ua-mobile': '?0',
@@ -104,6 +106,15 @@ headers = {
                   'Safari/537.36 Edg/110.0.1587.63',
     'x-requested-with': 'XMLHttpRequest',
 }
+
+cookie = '要写自己的cookie哦'
+headers['cookie'] = cookie
+
+
+def time_format(input_time_str):
+    input_format = '%a %b %d %H:%M:%S %z %Y'
+    output_format = '%Y-%m-%d %H:%M:%S'
+    return datetime.strptime(input_time_str, input_format).strftime(output_format)
 
 
 def make_text(uid):
@@ -181,6 +192,72 @@ def make_commit(uid):
     print(">> 评论个数:", cnt)
 
 
+def find_uid_from_person(name, page):
+    # 澳门银河:1921176353
+    # uid=1921176353 & luicode=10000011 & lfid=1076031921176353 & value=1921176353 & containerid=1076031921176353
+    # uid=1663088660 & luicode=10000011 & lfid=1076031663088660 & value=1663088660 & containerid=1076031663088660
+    # 芒果TV: 1663088660
+    uid_arr = []
+    img_arr = []
+
+    url3 = 'https://m.weibo.cn/api/container/getIndex?'
+
+    param3 = {
+        'uid': name,
+        't': 0,
+        'luicode': 10000011,
+        'lfid': str(107603) + str(name),
+        'type': 1,
+        'type': 'uid',
+        'value': name,
+        'containerid': str(107603) + str(name),
+    }
+    url3 += "&page_type=searchall&page="
+
+    for pages in range(1, page + 1):  # pages
+        print("-" * 25, "page:", str(pages), "-" * 25)
+        response = requests.get(url3, headers=headers, params=param3)
+        resp_json = response.json()
+        since_id = resp_json['data']['cardlistInfo']['since_id']
+        param3['since_id'] = since_id
+        val = len(resp_json['data']['cards'])
+        for j in range(val):
+            if pages == 1 and j == 0:
+                continue
+            img_url = []
+            commit = resp_json['data']['cards'][j]
+            if commit['card_type'] == 9:
+                if commit['mblog']['created_at'][-4:] == '2023':  # 按时间判断
+                    uid_arr.append(commit['mblog']['mid'])  # id
+                    # 图片处理
+                    if commit['mblog']['pic_num'] != 0:  # 有图片
+                        num = len(commit['mblog']['pics'])  # 图片个数
+                        for k in range(num):
+                            img_url.append(commit['mblog']['pics'][k]['large']['url'])
+                    img_arr.append(img_url)
+
+                print(commit['mblog']['mid'])  # uid
+                print(commit['mblog']['created_at'])  # create time
+            elif commit['card_type'] == 11 and commit['card_group'][0]['card_type'] == 9:
+                if commit['card_group'][0]['mblog']['created_at'][-4:] == '2023':  # 按时间判断
+                    uid_arr.append(commit['card_group'][0]['mblog']['mid'])  # id
+                    # 图片处理
+                    if commit['card_group'][0]['mblog']['pic_num'] != 0:  # 有图片
+                        # print(commit['card_group'][0]['mblog']['pics'][0]['url'])
+                        num = len(commit['card_group'][0]['mblog']['pics'])  # 图片个数
+                        for k in range(num):
+                            try:
+                                img_url.append(commit['card_group'][0]['mblog']['pics'][k]['large']['url'])
+                            except:
+                                continue
+                    img_arr.append(img_url)
+
+                print(commit['card_group'][0]['mblog']['mid'])  # uid
+                print(commit['card_group'][0]['mblog']['created_at'])  # create time
+        sleep(1)
+    return uid_arr, img_arr
+
+
 def find_uid(keywords, page):
     uid_arr = []
     img_arr = []
@@ -240,12 +317,20 @@ def make_img(uid, img_url):
 
 
 if __name__ == "__main__":
-    search_page = 50  # 更改爬取的页数
-    keyword = "银河澳门"
-    uid_list, img_list = find_uid(keyword, search_page)
-    print(len(uid_list), len(img_list))
-    
-    # 需要先在根目录下创建data文件夹
+    search_page = 10  # 更改爬取的页数
+    choose = input("1:爬取关键词下的热门微博\n2:爬取用户发布的所有微博\n请输入: ")
+    if choose == '1':
+        # 爬取关键词下的热门微博
+        keyword = "银河澳门"
+        uid_list, img_list = find_uid(keyword, search_page)
+    elif choose == '2':
+        # 爬取用户发布的所有微博
+        ID = "1663088660"
+        uid_list, img_list = find_uid_from_person(ID, search_page)
+    else:
+        print("输入错误")
+        exit(-1)
+
     for i in range(len(uid_list)):
         if not os.path.exists("data/" + str(uid_list[i])):
             os.makedirs("data/" + str(uid_list[i]))  # 创建文件夹
@@ -257,9 +342,10 @@ if __name__ == "__main__":
         else:  # 之前已经爬取过了
             print(">> 爬过的帖子...")
             continue
+
+    print(">> 共爬取了", len(uid_list), "个微博...")
     exit(0)
 
-```
 
-## 通过个人主页微博获取
+```
 
