@@ -1,1 +1,4 @@
-hexo clean && hexo d && hexo g && hexo s
+@echo off
+echo Deploying to https://tonylsx.top
+hexo clean && hexo deploy && hexo g && hexo server
+@pause
