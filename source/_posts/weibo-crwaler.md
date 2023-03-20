@@ -15,11 +15,11 @@ katex: true
 
 1. 通过搜索关键词来获取关键词下前50页的热门微博，获取每条微博下的作者信息，评论信息，点赞数和转发数，图片和视频等。
 
-![image-20230320160522808](C:\Users\Tony Lee\Documents\忆潇湘的小站\tonylsx611.github.io\source\_posts\weibo-crwaler\image-20230320160522808.png)
+![image-20230320160522808](weibo-crwaler\image-20230320160522808.png)
 
 2. 通过搜索博主id获取该博主所发布的所有微博内容，包括评论信息，点赞数和转发数，图片和视频等。
 
-![image-20230320160746584](C:\Users\Tony Lee\Documents\忆潇湘的小站\tonylsx611.github.io\source\_posts\weibo-crwaler\image-20230320160746584.png)
+![image-20230320160746584](weibo-crwaler\image-20230320160746584.png)
 
 # 数据分析
 
@@ -33,11 +33,11 @@ https://m.weibo.cn/search?containerid=100103type%3D1%26q%3D%E5%B0%8F%E7%B1%B313
 
 其中，`%E5%B0%8F%E7%B1%B313`为`小米13`，通过`quote()`函数将中文转换为网址信息，前面的内容`https://m.weibo.cn/search?containerid=100103type%3D1%26q%3D`为固定信息，无论更换任何关键词其值都不发生改变。
 
-![image-20230320162055981](C:\Users\Tony Lee\Documents\忆潇湘的小站\tonylsx611.github.io\source\_posts\weibo-crwaler\image-20230320162055981.png)
+![image-20230320162055981](weibo-crwaler\image-20230320162055981.png)
 
 该URL为GET请求，请求得到的信息中包含详细的每条卡片信息，包含卡片的ID信息，图片信息，作者信息，发布时间等等。
 
-![image-20230320162420077](C:\Users\Tony Lee\Documents\忆潇湘的小站\tonylsx611.github.io\source\_posts\weibo-crwaler\image-20230320162420077.png)
+![image-20230320162420077](weibo-crwaler\image-20230320162420077.png)
 
 `data->cards->1->mblog`中包含了我们需要搜集的绝大多数信息，这些信息是开放的未加密的。
 
@@ -60,7 +60,7 @@ https://m.weibo.cn/comments/hotflow?id=4881387725260346&mid=4881387725260346&max
 
 因此可以看出翻页请求的方式为修改max_id的值，而max_id的值是从上一个URL获取到的。只需要不停的将上一个max_id迭代给下一个URL中的参数中，直到max_id=0结束迭代即可。
 
-![image-20230320202213798](C:\Users\Tony Lee\Documents\忆潇湘的小站\tonylsx611.github.io\source\_posts\weibo-crwaler\image-20230320202213798.png)
+![image-20230320202213798](weibo-crwaler\image-20230320202213798.png)
 
 3. 个人主页下面的微博页面请求URL格式为：
 
@@ -71,7 +71,7 @@ https://m.weibo.cn/api/container/getIndex?uid=2022252207&luicode=10000011&lfid=1
 
 因此可以看出翻页的请求方式为修改since_id的值，而since_id的值也是从上一个URL获取到的。跟上面的操作方法一样迭代，直到`data->cards`为空即可。
 
-![image-20230320204124708](C:\Users\Tony Lee\Documents\忆潇湘的小站\tonylsx611.github.io\source\_posts\weibo-crwaler\image-20230320204124708.png)
+![image-20230320204124708](weibo-crwaler\image-20230320204124708.png)
 
 # 全部代码
 
