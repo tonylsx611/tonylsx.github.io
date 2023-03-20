@@ -50,11 +50,11 @@ plt.show
 
 ```
 
-![屏幕截图 2023-02-07 165418](flyfare-predict\屏幕截图 2023-02-07 165418.png)
+![屏幕截图 2023-02-07 165418](flyfare-predict/屏幕截图 2023-02-07 165418.png)
 
 数据清洗的目标就是把`df`中所有`object`类型的数据变为`int`类型，以便于通过机器学习数据预测。
 
-![image-20230207165916491](flyfare-predict\屏幕截图 2023-02-07 165905.png)
+![image-20230207165916491](flyfare-predict/屏幕截图 2023-02-07 165905.png)
 
 ```python
 #drop the nullvalues
@@ -259,7 +259,7 @@ def predict(ml_model):
 predict(RandomForestRegressor())
 ```
 
- ![image-20230208225110702](C:\Users\Tony Lee\Documents\忆潇湘的小站\source\_posts\flyfare-predict\image-20230208225110702.png)
+ ![image-20230208225110702](flyfare-predict/image-20230208225110702.png)
 
 ###### K-Neighbor Regressors
 
@@ -267,7 +267,7 @@ predict(RandomForestRegressor())
 predict(KNeighborsRegressor())
 ```
 
-![image-20230208225204468](C:\Users\Tony Lee\Documents\忆潇湘的小站\source\_posts\flyfare-predict\image-20230208225204468.png)
+![image-20230208225204468](flyfare-predict/image-20230208225204468.png)
 
 ###### Simple Vector Regressors
 
@@ -275,7 +275,7 @@ predict(KNeighborsRegressor())
 predict(SVR())
 ```
 
-![image-20230208225431216](C:\Users\Tony Lee\Documents\忆潇湘的小站\source\_posts\flyfare-predict\image-20230208225431216.png)
+![image-20230208225431216](flyfare-predict/image-20230208225431216.png)
 
 ## 优化预测代码
 
@@ -306,8 +306,9 @@ sns.displot(y_test-prediction)
 r2_score(y_test,prediction) # 0.8602
 ```
 
-![image-20230208225639379](C:\Users\Tony Lee\Documents\忆潇湘的小站\source\_posts\flyfare-predict\image-20230208225639379.png)
+![image-20230208225639379](flyfare-predict/image-20230208225639379.png)
 
 ---
 
-本文部分内容和图片引用自文章：[(14条消息) 【机器学习基础】机器学习模型与算法最全分类汇总！_风度78的博客-CSDN博客](https://blog.csdn.net/fengdu78/article/details/115878843)，如有侵权，请联系我。
+本文部分内容和图片引用自文章：[【机器学习基础】机器学习模型与算法最全分类汇总！_风度78的博客-CSDN博客](https://blog.csdn.net/fengdu78/article/details/115878843)，如有侵权，请联系我。
+
